@@ -15,6 +15,7 @@ import FormProvider from "../../components/hook-form/form-provider";
 import RHFTextField from "../../components/hook-form/rhf-text-field";
 import { RHFMultiCheckbox } from "../../components/hook-form/rhf-checkbox";
 import { useFormContext, Controller } from 'react-hook-form';
+import LeadFormSuccess from "./lead-form-success";
 
 // ----------------------------------------------------------------------
 
@@ -98,7 +99,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function LeadForm() {
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const methods = useForm<FormData>({
         resolver: zodResolver(schema),
@@ -113,79 +114,84 @@ export function LeadForm() {
         },
     });
 
+    const { reset, formState: { isSubmitting }, handleSubmit } = methods;
+
     const onSubmit = async (data: FormData) => {
         try {
-            setIsSubmitting(true);
-            // Here you would typically send the data to your backend
             console.log(data);
-            // Reset form or show success message
+            setShowSuccess(true);
+            reset();
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                setShowSuccess(false);
+            }, 3000);
         } catch (error) {
             console.error(error);
-        } finally {
-            setIsSubmitting(false);
         }
     };
 
     return (
-        <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-            <Stack spacing={3} maxWidth="sm" padding={5}>
-                <RHFTextField
-                    name="firstName"
-                    label="First Name"
-                    required
-                />
+        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+            {showSuccess ? (<LeadFormSuccess />) : (
+                <Stack spacing={3} maxWidth="sm" padding={5}>
+                    <RHFTextField
+                        name="firstName"
+                        label="First Name"
+                        required
+                    />
 
-                <RHFTextField
-                    name="lastName"
-                    label="Last Name"
-                    required
-                />
+                    <RHFTextField
+                        name="lastName"
+                        label="Last Name"
+                        required
+                    />
 
-                <RHFTextField
-                    name="email"
-                    label="Email"
-                    required
-                />
+                    <RHFTextField
+                        name="email"
+                        label="Email"
+                        required
+                    />
 
-                <RHFTextField
-                    name="linkedinProfile"
-                    label="LinkedIn Profile"
-                    required
-                    placeholder="https://linkedin.com/in/your-profile"
-                />
+                    <RHFTextField
+                        name="linkedinProfile"
+                        label="LinkedIn Profile"
+                        required
+                        placeholder="https://linkedin.com/in/your-profile"
+                    />
 
-                <Typography textAlign={"center"} variant="h5">Visas Categories of Interest</Typography>
+                    <Typography textAlign={"center"} variant="h5">Visas Categories of Interest</Typography>
 
-                <RHFMultiCheckbox
-                    name="visasOfInterest"
-                    options={visaOptions}
-                    row
-                />
+                    <RHFMultiCheckbox
+                        name="visasOfInterest"
+                        options={visaOptions}
+                        row
+                    />
 
-                <RHFUpload
-                    name="resume"
-                    accept=".pdf,.doc,.docx"
-                    helperText="Accepted formats: PDF, DOC, DOCX (max 5MB)"
-                />
+                    <RHFUpload
+                        name="resume"
+                        accept=".pdf,.doc,.docx"
+                        helperText="Accepted formats: PDF, DOC, DOCX (max 5MB)"
+                    />
 
-                <Typography textAlign={"center"} variant="h5">How can we help you?</Typography>
+                    <Typography textAlign={"center"} variant="h5">How can we help you?</Typography>
 
-                <RHFTextField
-                    name="additionalInfo"
-                    label="Additional Information"
-                    multiline
-                    rows={4}
-                />
+                    <RHFTextField
+                        name="additionalInfo"
+                        label="Additional Information"
+                        multiline
+                        rows={4}
+                    />
 
-                <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    disabled={isSubmitting}
-                >
-                    {isSubmitting ? "Submitting..." : "Submit"}
-                </Button>
-            </Stack>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        disabled={isSubmitting}
+                    >
+                        {isSubmitting ? "Submitting..." : "Submit"}
+                    </Button>
+                </Stack>
+            )}
         </FormProvider>
     );
 }
