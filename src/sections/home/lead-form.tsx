@@ -1,29 +1,73 @@
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
-    Box,
     Stack,
-    TextField,
     Button,
-    MenuItem,
     FormControl,
     FormHelperText,
-    InputLabel,
-    Select,
-    OutlinedInput,
+    Typography,
 } from "@mui/material";
+
+// components
+import FormProvider from "../../components/hook-form/form-provider";
+import RHFTextField from "../../components/hook-form/rhf-text-field";
+import { RHFMultiCheckbox } from "../../components/hook-form/rhf-checkbox";
+import { useFormContext, Controller } from 'react-hook-form';
+
+// ----------------------------------------------------------------------
+
+interface RHFUploadProps {
+    name: string;
+    accept?: string;
+    helperText?: string;
+}
+
+function RHFUpload({ name, accept, helperText }: RHFUploadProps) {
+    const { control, setValue } = useFormContext();
+
+    return (
+        <Controller
+            name={name}
+            control={control}
+            render={({ fieldState: { error } }) => (
+                <FormControl error={!!error} required fullWidth>
+                    <input
+                        type="file"
+                        onChange={(e) => setValue(name, e.target.files)}
+                        accept={accept}
+                        style={{ display: "none" }}
+                        id={`${name}-upload`}
+                    />
+                    <Button
+                        variant="outlined"
+                        component="label"
+                        htmlFor={`${name}-upload`}
+                        fullWidth
+                    >
+                        Upload Resume/CV
+                    </Button>
+                    <FormHelperText>
+                        {(!!error || helperText) && (
+                            error ? error?.message : helperText
+                        )}
+                    </FormHelperText>
+                </FormControl>
+            )}
+        />
+    );
+}
 
 const MAX_FILE_SIZE = 5000000; // 5MB
 const ACCEPTED_FILE_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
 
 const visaOptions = [
-    "Student Visa",
-    "Work Visa",
-    "Tourist Visa",
-    "Business Visa",
-    "Permanent Residency",
+    { label: "Student Visa", value: "Student Visa" },
+    { label: "Work Visa", value: "Work Visa" },
+    { label: "Tourist Visa", value: "Tourist Visa" },
+    { label: "Business Visa", value: "Business Visa" },
+    { label: "Permanent Residency", value: "Permanent Residency" },
 ];
 
 const schema = z.object({
@@ -56,11 +100,7 @@ type FormData = z.infer<typeof schema>;
 export function LeadForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<FormData>({
+    const methods = useForm<FormData>({
         resolver: zodResolver(schema),
         mode: "onBlur",
         defaultValues: {
@@ -87,138 +127,54 @@ export function LeadForm() {
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-            <Stack spacing={3}>
-                <Controller
+        <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+            <Stack spacing={3} maxWidth="sm" padding={5}>
+                <RHFTextField
                     name="firstName"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="First Name"
-                            error={!!errors.firstName}
-                            helperText={errors.firstName?.message}
-                            fullWidth
-                            required
-                        />
-                    )}
+                    label="First Name"
+                    required
                 />
 
-                <Controller
+                <RHFTextField
                     name="lastName"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="Last Name"
-                            error={!!errors.lastName}
-                            helperText={errors.lastName?.message}
-                            fullWidth
-                            required
-                        />
-                    )}
+                    label="Last Name"
+                    required
                 />
 
-                <Controller
+                <RHFTextField
                     name="email"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            type="email"
-                            label="Email"
-                            error={!!errors.email}
-                            helperText={errors.email?.message}
-                            fullWidth
-                            required
-                        />
-                    )}
+                    label="Email"
+                    required
                 />
 
-                <Controller
+                <RHFTextField
                     name="linkedinProfile"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="LinkedIn Profile"
-                            error={!!errors.linkedinProfile}
-                            helperText={errors.linkedinProfile?.message}
-                            fullWidth
-                            required
-                            placeholder="https://linkedin.com/in/your-profile"
-                        />
-                    )}
+                    label="LinkedIn Profile"
+                    required
+                    placeholder="https://linkedin.com/in/your-profile"
                 />
 
-                <Controller
+                <Typography textAlign={"center"} variant="h5">Visas Categories of Interest</Typography>
+
+                <RHFMultiCheckbox
                     name="visasOfInterest"
-                    control={control}
-                    render={({ field }) => (
-                        <FormControl error={!!errors.visasOfInterest} required fullWidth>
-                            <InputLabel>Visas of Interest</InputLabel>
-                            <Select
-                                {...field}
-                                multiple
-                                input={<OutlinedInput label="Visas of Interest" />}
-                            >
-                                {visaOptions.map((visa) => (
-                                    <MenuItem key={visa} value={visa}>
-                                        {visa}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            <FormHelperText>
-                                {errors.visasOfInterest?.message}
-                            </FormHelperText>
-                        </FormControl>
-                    )}
+                    options={visaOptions}
+                    row
                 />
 
-                <Controller
+                <RHFUpload
                     name="resume"
-                    control={control}
-                    render={({ field: { ref, ...field } }) => (
-                        <FormControl error={!!errors.resume} required fullWidth>
-                            <input
-                                type="file"
-                                onChange={(e) => field.onChange(e.target.files)}
-                                accept=".pdf,.doc,.docx"
-                                style={{ display: "none" }}
-                                id="resume-upload"
-                                ref={ref}
-                            />
-                            <Button
-                                variant="outlined"
-                                component="label"
-                                htmlFor="resume-upload"
-                                fullWidth
-                            >
-                                Upload Resume/CV
-                            </Button>
-                            <FormHelperText>
-                                {typeof errors.resume?.message === 'string'
-                                    ? errors.resume.message
-                                    : "Accepted formats: PDF, DOC, DOCX (max 5MB)"}
-                            </FormHelperText>
-                        </FormControl>
-                    )}
+                    accept=".pdf,.doc,.docx"
+                    helperText="Accepted formats: PDF, DOC, DOCX (max 5MB)"
                 />
 
-                <Controller
+                <Typography textAlign={"center"} variant="h5">How can we help you?</Typography>
+
+                <RHFTextField
                     name="additionalInfo"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="Additional Information"
-                            multiline
-                            rows={4}
-                            error={!!errors.additionalInfo}
-                            helperText={errors.additionalInfo?.message}
-                            fullWidth
-                        />
-                    )}
+                    label="Additional Information"
+                    multiline
+                    rows={4}
                 />
 
                 <Button
@@ -230,6 +186,6 @@ export function LeadForm() {
                     {isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
             </Stack>
-        </Box>
+        </FormProvider>
     );
 }
