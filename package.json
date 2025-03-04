@@ -17,6 +17,8 @@
     "@mui/lab": "^6.0.0-beta.21",
     "@mui/material": "^6.4.6",
     "axios": "^1.8.1",
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "next": "15.2.0",
     "react": "^19.0.0",
@@ -27,6 +29,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/lodash": "^4.17.16",
     "@types/node": "^20",
     "@types/react": "^19",

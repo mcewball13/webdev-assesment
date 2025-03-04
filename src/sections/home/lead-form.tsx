@@ -15,7 +15,6 @@ import FormProvider from "../../components/hook-form/form-provider";
 import RHFTextField from "../../components/hook-form/rhf-text-field";
 import { RHFMultiCheckbox } from "../../components/hook-form/rhf-checkbox";
 import { postLead } from "../../api/leads";
-import { ILead } from "../../types/types";
 
 // ----------------------------------------------------------------------
 

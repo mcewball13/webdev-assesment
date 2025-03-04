@@ -1,24 +1,5 @@
 [
   {
-    "id": "88fbf172-0675-4251-8b48-22c0e55b56d2",
-    "firstName": "Michael",
-    "lastName": "McEwen",
-    "email": "mcewball13@gmail.com",
-    "linkedinProfile": "https://www.linkedin.com/in/michael-mcewen-52b54b180/",
-    "visasOfInterest": [
-      "Student Visa",
-      "Business Visa",
-      "Tourist Visa"
-    ],
-    "resume": {
-      "0": {}
-    },
-    "additionalInfo": "Interested in long-term opportunities",
-    "status": "PENDING",
-    "createdAt": "2025-03-04T00:32:14.968Z",
-    "updatedAt": "2025-03-04T00:32:14.968Z"
-  },
-  {
     "id": "7d4f8c31-9e2a-4b5d-8f7c-1234a5b6c7d8",
     "firstName": "Sarah",
     "lastName": "Johnson",
@@ -49,7 +30,7 @@
       "0": {}
     },
     "additionalInfo": "Recent graduate",
-    "status": "PENDING",
+    "status": "REACHED_OUT",
     "createdAt": "2025-03-02T10:15:14.968Z",
     "updatedAt": "2025-03-02T10:15:14.968Z"
   },
@@ -84,7 +65,7 @@
       "0": {}
     },
     "additionalInfo": "Entrepreneur",
-    "status": "PENDING",
+    "status": "REACHED_OUT",
     "createdAt": "2025-02-26T09:15:14.968Z",
     "updatedAt": "2025-02-26T09:15:14.968Z"
   },

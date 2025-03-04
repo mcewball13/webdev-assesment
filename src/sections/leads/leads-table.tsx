@@ -10,14 +10,12 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
-import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import LastPageIcon from '@mui/icons-material/LastPage';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ILead } from '../../types/types';
 import TableHead from '@mui/material/TableHead';
-import { Button, Icon, Stack } from '@mui/material';
+import { Button } from '@mui/material';
 import { KeyedMutator } from 'swr';
 import { deleteLead } from '../../api/leads';
 import axios from 'axios';
@@ -102,7 +100,6 @@ export default function CustomPaginationActionsTable(props: TableProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -166,14 +163,14 @@ export default function CustomPaginationActionsTable(props: TableProps) {
               </TableCell>
               <TableCell sx={{ width: 80 }}>{row.status}</TableCell>
               <TableCell>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => handleSetReachedOut(row.id)}
-                  >
-                    Set Reached Out
-                  </Button>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => handleSetReachedOut(row.id)}
+                >
+                  Set Reached Out
+                </Button>
               </TableCell>
               <TableCell>
                 <IconButton onClick={() => handleDeleteLead(row.id)}>

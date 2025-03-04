@@ -6,10 +6,10 @@ import Typography from '@mui/material/Typography';
 import LeadsTable from '../leads-table';
 import { useGetLeads } from '../../../api/leads';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function LeadsListView() {
-  const { leads, leadsLoading, leadsError, leadsValidating, mutateLeads } = useGetLeads();
+  const { leads, leadsLoading, mutateLeads } = useGetLeads();
 
   useEffect(() => {
     console.log('leads: ', leads);
