@@ -28,24 +28,12 @@ export default function ThemeProvider({ children }: Props) {
     []
   );
 
-  const memoizedValue = useMemo(
-    () =>
-        // Base
-        baseOption,
-    [baseOption]
-  );
-
-  const theme = createTheme(memoizedValue as ThemeOptions);
+  const theme = createTheme(baseOption as ThemeOptions);
 
   theme.components = componentsOverrides(theme);
 
-  const themeWithLocale = useMemo(
-    () => createTheme(theme),
-    [theme]
-  );
-
   return (
-    <MuiThemeProvider theme={themeWithLocale}>
+    <MuiThemeProvider theme={theme}>
         <CssBaseline />
         {children}
     </MuiThemeProvider>

@@ -76,12 +76,6 @@ export default function Button(theme: Theme) {
 
     const colorStyle = COLORS.map((color) => ({
       ...(ownerState.color === color && {
-        // CONTAINED
-        ...(containedVariant && {
-          '&:hover': {
-            boxShadow: theme.customShadows[color],
-          },
-        }),
         // SOFT
         ...(softVariant && {
           color: theme.palette[color][isLight ? 'dark' : 'light'],

@@ -5,62 +5,21 @@ import * as z from "zod";
 import {
     Stack,
     Button,
-    FormControl,
-    FormHelperText,
     Typography,
 } from "@mui/material";
 
 // components
+import LeadFormSuccess from "./lead-form-success";
+import { RHFUpload } from "../../components/hook-form";
 import FormProvider from "../../components/hook-form/form-provider";
 import RHFTextField from "../../components/hook-form/rhf-text-field";
 import { RHFMultiCheckbox } from "../../components/hook-form/rhf-checkbox";
-import { useFormContext, Controller } from 'react-hook-form';
-import LeadFormSuccess from "./lead-form-success";
+import { postLead } from "../../api/leads";
+import { ILead } from "../../types/types";
 
 // ----------------------------------------------------------------------
 
-interface RHFUploadProps {
-    name: string;
-    accept?: string;
-    helperText?: string;
-}
-
-function RHFUpload({ name, accept, helperText }: RHFUploadProps) {
-    const { control, setValue } = useFormContext();
-
-    return (
-        <Controller
-            name={name}
-            control={control}
-            render={({ fieldState: { error } }) => (
-                <FormControl error={!!error} required fullWidth>
-                    <input
-                        type="file"
-                        onChange={(e) => setValue(name, e.target.files)}
-                        accept={accept}
-                        style={{ display: "none" }}
-                        id={`${name}-upload`}
-                    />
-                    <Button
-                        variant="outlined"
-                        component="label"
-                        htmlFor={`${name}-upload`}
-                        fullWidth
-                    >
-                        Upload Resume/CV
-                    </Button>
-                    <FormHelperText>
-                        {(!!error || helperText) && (
-                            error ? error?.message : helperText
-                        )}
-                    </FormHelperText>
-                </FormControl>
-            )}
-        />
-    );
-}
-
-const MAX_FILE_SIZE = 5000000; // 5MB
+const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_FILE_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
 
 const visaOptions = [
@@ -93,7 +52,7 @@ const schema = z.object({
             (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
             "Only .pdf, .doc, and .docx files are accepted"
         ),
-    additionalInfo: z.string().optional(),
+    additionalInfo: z.string(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -119,9 +78,10 @@ export function LeadForm() {
     const onSubmit = async (data: FormData) => {
         try {
             console.log(data);
+            const response = await postLead(data);
+            console.log('submitted: ', response);
             setShowSuccess(true);
             reset();
-            // Hide success message after 3 seconds
             setTimeout(() => {
                 setShowSuccess(false);
             }, 3000);
