@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lead Management System
+
+A modern web application built with Next.js for managing sales leads and opportunities. This system provides a comprehensive solution for tracking, managing, and analyzing sales leads with features including authentication, lead management, and data visualization.
+
+## Features
+
+- **User Authentication**: Secure login and registration system
+- **Lead Management**: Create, read, update, and delete lead information
+- **Dashboard**: Visual representation of lead statistics and key metrics
+- **Responsive Design**: Mobile-first approach using Material-UI components
+- **Role-Based Access**: Different access levels for various user roles
+
+## Tech Stack
+
+- **Frontend**: Next.js 15 with App Router
+- **UI Framework**: Material-UI (MUI)
+- **Authentication**: Custom JWT-based authentication
+- **State Management**:
+  - React Context API for auth state
+  - SWR for server state and data fetching
+- **Type Safety**: TypeScript
+- **Styling**: Emotion (MUI's styling solution)
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Node.js (v18.0.0 or higher)
+- npm or yarn package manager
+- Git
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   ```bash
+   git clone https://github.com/your-username/lead-management-system.git
+   cd lead-management-system
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables**
+   Create a `.env.local` file in the root directory and add the following variables:
+
+   ```bash
+   NEXT_PUBLIC_API_URL=http://localhost:3000/api
+   JWT_SECRET=your-jwt-secret
+   ```
+
+4. **Run the development server**
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
+
+## Project Structure
+
+```text
+├── src/
+│   ├── app/             # Next.js app router pages
+│   ├── components/      # Reusable UI components
+│   ├── context/         # React Context providers
+│   ├── lib/            # Utility functions and helpers
+│   └── types/          # TypeScript type definitions
+├── public/             # Static assets
+└── data/              # Mock data and database schemas
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Available Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `npm run dev` - Starts the development server
+- `npm run build` - Creates a production build
+- `npm run start` - Runs the production server
+- `npm run lint` - Runs ESLint for code linting
+- `npm run test` - Runs the test suite
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contributing
 
-## Learn More
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contact
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Michael McEwen - [mcewball13@gmail.com](mailto:mcewball13@gmail.com)
+Project Link: [https://github.com/mcewball13/webdev-assesment](https://github.com/mcewball13/webdev-assesment)
