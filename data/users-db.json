@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "648e9ff8-beac-4f5b-be73-635c9cff91f9",
+    "email": "mcewball13@gmail.com",
+    "password": "$2b$10$PMnFH./3jWp9rgdu9XwW8O/B0CjRfcGMDmk3RNd8d1Icr/XmIrzdS",
+    "firstName": "Michael",
+    "lastName": "McEwen",
+    "role": "USER",
+    "createdAt": "2025-03-04T12:55:46.841Z",
+    "updatedAt": "2025-03-04T12:55:46.841Z"
+  }
+]

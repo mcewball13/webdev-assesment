@@ -11,8 +11,8 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import FormProvider from '../../components/hook-form/form-provider';
 import { RHFTextField } from '../../components/hook-form';
 
-// types
-import { ILoginRequest, IRegisterRequest } from '../../types/user';
+import { useAuth } from '../../context/auth-provider';
+import { useRouter } from 'next/navigation';
 
 // ----------------------------------------------------------------------
 
@@ -42,6 +42,10 @@ export default function LoginView() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const { login, register } = useAuth();
+
+  const router = useRouter();
+
   const loginMethods = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -63,19 +67,19 @@ export default function LoginView() {
 
   const handleLoginSubmit = async (data: LoginFormData) => {
     try {
-      // TODO: Implement login logic
-      console.log('Login data:', data);
+      await login(data.email, data.password);
+      router.push('/leads');
     } catch (error) {
-      console.error(error);
+      console.error('Login failed:', error);
     }
   };
 
   const handleRegisterSubmit = async (data: RegisterFormData) => {
     try {
-      // TODO: Implement register logic
-      console.log('Register data:', data);
+      await register(data.email, data.password, data.firstName, data.lastName);
+      router.push('/leads');
     } catch (error) {
-      console.error(error);
+      console.error('Registration failed:', error);
     }
   };
 
@@ -110,7 +114,6 @@ export default function LoginView() {
           >
             <Stack spacing={3}>
               <RHFTextField name="email" label="Email" />
-
               <RHFTextField
                 name="password"
                 label="Password"
@@ -125,7 +128,6 @@ export default function LoginView() {
                   ),
                 }}
               />
-
               <Button
                 fullWidth
                 size="large"
@@ -147,9 +149,7 @@ export default function LoginView() {
                 <RHFTextField name="firstName" label="First Name" />
                 <RHFTextField name="lastName" label="Last Name" />
               </Stack>
-
               <RHFTextField name="email" label="Email" />
-
               <RHFTextField
                 name="password"
                 label="Password"
@@ -164,7 +164,6 @@ export default function LoginView() {
                   ),
                 }}
               />
-
               <RHFTextField
                 name="confirmPassword"
                 label="Confirm Password"
@@ -179,7 +178,6 @@ export default function LoginView() {
                   ),
                 }}
               />
-
               <Button
                 fullWidth
                 size="large"
