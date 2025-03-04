@@ -34,8 +34,8 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/lead-management-system.git
-   cd lead-management-system
+   git clone https://github.com/mcewball13/webdev-assesment.git
+   cd webdev-assesment
    ```
 
 2. **Install dependencies**
@@ -50,7 +50,6 @@ Before you begin, ensure you have the following installed:
    Create a `.env.local` file in the root directory and add the following variables:
 
    ```bash
-   NEXT_PUBLIC_API_URL=http://localhost:3000/api
    JWT_SECRET=your-jwt-secret
    ```
 
@@ -84,19 +83,6 @@ Before you begin, ensure you have the following installed:
 - `npm run build` - Creates a production build
 - `npm run start` - Runs the production server
 - `npm run lint` - Runs ESLint for code linting
-- `npm run test` - Runs the test suite
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
